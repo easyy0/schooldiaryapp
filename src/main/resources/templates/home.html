@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/utils.css" />
+    <link rel="stylesheet" href="css/home.css" />
+</head>
+    <body>
+        <div th:replace="topBar.html :: div"></div>
+        <div class="home-center">
+            <div class="home-center-element">
+                <div class="home-center-element-header">
+                    <p>News</p>
+                </div>
+                <div class="home-center-element-list">
+                    <div th:each="newsItem : ${news}" class="home-center-element-list-record">
+                        <div th:text="${newsItem.header}"
+                             class="home-center-element-list-record-head ratio-onebyone"></div>
+                        <div class="home-center-element-list-record-body">
+                            <span th:text="${newsItem.title}" class="home-center-element-list-record-body-head">
+                            </span>
+                            <span th:text="${newsItem.description}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="home-center-element">
+                <div class="home-center-element-header">
+                    <p>Incoming events</p>
+                </div>
+                <div class="home-center-element-list">
+                    <div class="home-center-element-list-record">
+                        <div class="home-center-element-list-record-head date">
+                            <span>WIP</span>
+                            <span>WIP</span>
+                        </div>
+                        <div class="home-center-element-list-record-body">
+                            <span class="home-center-element-list-record-body-head">WIP</span>
+                            <span>Work In Progress</span>
+                        </div>
+                    </div>
+<!--                    <div class="home-center-element-list-record">-->
+<!--                        <div class="home-center-element-list-record-head date">-->
+<!--                            <span>14-04-2024</span>-->
+<!--                            <span>14:15</span>-->
+<!--                        </div>-->
+<!--                        <div class="home-center-element-list-record-body">-->
+<!--                            <span class="home-center-element-list-record-body-head">Homework</span>-->
+<!--                            <span>Geography</span>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="https://kit.fontawesome.com/69eded866d.js" crossorigin="anonymous"></script>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/utils.css" />
+    <link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+<form action="/api/signin" method="post">
+    <div class="login-container">
+        <div class="login-header">
+            <h1 class="login-header-apptitle">School Diary App</h1>
+            <p class="login-header-creator">by Kacper Zalewski</p>
+        </div>
+        <div class="login-input-container">
+            <label class="login-input-label">Login</label>
+            <input class="login-input-textfield" type="text" name="username" required/>
+            <label class="login-input-label">Password</label>
+            <input class="login-input-textfield" type="password" name="password" required/>
+        </div>
+        <p th:if="${param.error != null}" class="login-error" th:text="${param.error}"></p>
+        <input class="login-submit" value="LOGIN" type="submit"/>
+    </div>
+</form>
+</body>
+</html>

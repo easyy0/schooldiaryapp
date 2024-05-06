@@ -1,0 +1,54 @@
+<div class="home-topBar">
+    <div th:onclick="window.location.href='/home'" class="home-topBar-page">
+        <i class="fa-solid fa-house"></i>
+        <p>Home</p>
+    </div>
+    <div th:onclick="window.location.href='/messages'" class="home-topBar-page">
+        <i class="fa-solid fa-envelope-open-text"></i>
+        <div class="home-topBar-messages-new">
+            <p>999+</p>
+        </div>
+        <p>Messages</p>
+    </div>
+    <div class="home-topBar-page">
+        <i class="fa-solid fa-table"></i>
+        <p>Lesson Plan</p>
+    </div>
+    <div class="home-topBar-page">
+        <i class="fa-solid fa-user-graduate"></i>
+        <p>Marks</p>
+    </div>
+    <div class="home-topBar-page">
+        <i class="fa-solid fa-chart-column"></i>
+        <p>Frequence</p>
+    </div>
+    <div th:if="${#sets.contains(user_roles, 'ADMIN') or #sets.contains(user_roles, 'TEACHER')}"
+         class="home-topBar-page">
+        <i class="fa-solid fa-person-chalkboard"></i>
+        <p>Lessons</p>
+    </div>
+    <div class="home-topBar-page">
+        <i class="fa-solid fa-calendar-days"></i>
+        <p>Calendar</p>
+    </div>
+    <div class="home-topBar-page">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <p>Notes</p>
+    </div>
+    <div class="home-topBar-page">
+        <i class="fa-solid fa-list-check"></i>
+        <p>Exams</p>
+    </div>
+    <div class="home-topBar-page">
+        <i class="fa-solid fa-file-signature"></i>
+        <p>Homeworks</p>
+    </div>
+    <div th:if="${#sets.contains(user_roles, 'ADMIN')}" class="home-topBar-page">
+        <i class="fa-solid fa-user-gear"></i>
+        <p>Admin Panel</p>
+    </div>
+    <div th:onclick="window.location.href='/logout'" class="home-topBar-page">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <p>Logout</p>
+    </div>
+</div>

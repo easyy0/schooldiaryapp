@@ -1,0 +1,76 @@
+.d-flex {
+    display: flex !important;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.ratio-onebyone {
+    aspect-ratio: 1 / 1;
+}
+
+.date {
+    padding: 1.5%;
+    font-size: 130% !important;
+}
+
+.home-topBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    padding-right: 5.2vw;
+    gap: 1.3vw;
+    background-image: linear-gradient(to right, var(--primary-blue), var(--secondary-blue));
+    width: 100vw;
+    height: 5.1vw;
+}
+
+.home-topBar-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-topBar-page:hover {
+    cursor: pointer;
+}
+
+.home-topBar-page:hover * {
+    color: var(--secondary-gray);
+}
+
+
+.home-topBar-page i {
+    font-size: 2.1vw;
+    margin-bottom: 0.5vw;
+    color: white;
+}
+
+.home-topBar-page p {
+    font-size: 1vw;
+    color: white;
+    margin: auto;
+}
+
+.home-topBar-messages-new {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    padding: 0.5vw;
+    height: 0.5vw;
+    width: 0.5vw;
+    margin-left: 1.8vw;
+    position: absolute;
+    background-color: rgb(170, 5, 5);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
+
+}
+
+.home-topBar-messages-new p {
+    margin-top: -0.05vw;
+    font-size: 0.6vw;
+}
