@@ -23,10 +23,16 @@ public class User {
     @Column(name = "id")
     private Long id;
 
+    @JsonIgnore
     @Column(name = "username", unique = true)
     private String username;
     @JsonIgnore
     private String password;
+
+    private String firstname;
+    private String lastname;
+
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<UserRole> roles = new HashSet<>();
 
