@@ -1,8 +1,12 @@
 package pl.kacperzalewski.schooldiary.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -49,6 +53,18 @@ public class SecurityConfig {
         authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
+    }
+
+    @Bean
+    public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
+        ObjectMapper objectMapper = builder.createXmlMapper(false).build();
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper.registerModule(new JavaTimeModule());
+
+        // Dodaj moduł obsługujący cykliczne odwołania
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+
+        return objectMapper;
     }
 
     @Bean

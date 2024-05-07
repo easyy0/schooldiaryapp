@@ -2,18 +2,16 @@ package pl.kacperzalewski.schooldiary.controller.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kacperzalewski.schooldiary.entity.Message;
 import pl.kacperzalewski.schooldiary.entity.User;
 import pl.kacperzalewski.schooldiary.entity.UserRole;
 import pl.kacperzalewski.schooldiary.entity.enums.MessageStatus;
 import pl.kacperzalewski.schooldiary.entity.enums.MessageType;
-import pl.kacperzalewski.schooldiary.repository.MessageRepository;
 import pl.kacperzalewski.schooldiary.repository.UserRepository;
 import pl.kacperzalewski.schooldiary.service.MessageService;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @RestController
@@ -21,16 +19,13 @@ public class UserRestController {
 
     private final UserRepository userRepository;
 
-    private final MessageRepository messageRepository;
+    private final MessageService messageService;
 
     @Autowired
-    public UserRestController(UserRepository userRepository, MessageRepository messageRepository) {
+    public UserRestController(UserRepository userRepository, MessageService messageService) {
         this.userRepository = userRepository;
-        this.messageRepository = messageRepository;
-    }
+        this.messageService = messageService;
 
-    @GetMapping("/test/addUser")
-    public void addUser() {
         User user = new User();
         user.setUsername("admin");
         user.setPassword(new BCryptPasswordEncoder().encode("admin"));
@@ -43,6 +38,8 @@ public class UserRestController {
         User user2 = new User();
         user2.setUsername("teacher");
         user2.setPassword(new BCryptPasswordEncoder().encode("teacher"));
+        user2.setFirstname("Yankens");
+        user2.setLastname("Wattson");
         UserRole userRole2 = new UserRole();
         userRole2.setName("TEACHER");
         user2.setRoles(Set.of(userRole2));
@@ -58,12 +55,70 @@ public class UserRestController {
         userRepository.save(user3);
         System.out.println("USER3 SAVED!");
 
-        Message message = new Message();
-        message.setSender(user2);
-        message.setRecipients(Set.of(user3));
-        message.setType(MessageType.IMPORTANT);
-        message.setStatus(MessageStatus.UNREADEN);
-        message.setDate(new Date());
-        messageRepository.save(message);
+        for (int i = 0; i < 10; i++) {
+            Message message = new Message();
+            message.setSender(user2);
+            message.setRecipients(Set.of(user3));
+            message.setType(MessageType.DEFAULT);
+            message.setDescription("Admin message generated automatically with account creation, please do not reply");
+            message.setStatus(MessageStatus.UNREADEN);
+            message.setDate(LocalDateTime.now());
+            messageService.saveMessage(message);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            Message message = new Message();
+            message.setSender(user2);
+            message.setRecipients(Set.of(user3));
+            message.setType(MessageType.IMPORTANT);
+            message.setDescription("Admin message generated automatically with account creation, please do not reply");
+            message.setStatus(MessageStatus.UNREADEN);
+            message.setDate(LocalDateTime.now());
+            messageService.saveMessage(message);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            Message message = new Message();
+            message.setSender(user2);
+            message.setRecipients(Set.of(user3));
+            message.setType(MessageType.DEFAULT);
+            message.setDescription("Admin message generated automatically with account creation, please do not reply");
+            message.setStatus(MessageStatus.READEN);
+            message.setDate(LocalDateTime.now());
+            messageService.saveMessage(message);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            Message message = new Message();
+            message.setSender(user2);
+            message.setRecipients(Set.of(user3));
+            message.setType(MessageType.IMPORTANT);
+            message.setDescription("Admin message generated automatically with account creation, please do not reply");
+            message.setStatus(MessageStatus.READEN);
+            message.setDate(LocalDateTime.now());
+            messageService.saveMessage(message);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            Message message = new Message();
+            message.setSender(user2);
+            message.setRecipients(Set.of(user3));
+            message.setType(MessageType.ARCHIVED);
+            message.setDescription("Example of archived messages");
+            message.setStatus(MessageStatus.READEN);
+            message.setDate(LocalDateTime.now());
+            messageService.saveMessage(message);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            Message message = new Message();
+            message.setSender(user2);
+            message.setRecipients(Set.of(user3));
+            message.setType(MessageType.SENT);
+            message.setDescription("Message sent by me");
+            message.setStatus(MessageStatus.READEN);
+            message.setDate(LocalDateTime.now());
+            messageService.saveMessage(message);
+        }
     }
 }

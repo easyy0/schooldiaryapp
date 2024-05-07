@@ -18,7 +18,7 @@ public class News {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
 

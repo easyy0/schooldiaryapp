@@ -7,26 +7,28 @@
 </head>
     <body>
         <div th:replace="topBar.html :: div"></div>
+        <div id="messagesData" data-messages="${messages}"></div>
         <div class="home-center">
             <div class="home-center-container">
                 <div class="home-center-categories">
-                    <div onclick="filterMessages('all')" class="home-center-category">
+                    <div id="filter-all" onclick="filterMessages(event, 'all')" class="home-center-category category-pressed">
                         All
                     </div>
-                    <div onclick="filterMessages('important')" class="home-center-category">
+                    <div id="filter-important" onclick="filterMessages(event, 'important')"
+                         class="home-center-category category-normal">
                         Important
                     </div>
-                    <div class="home-center-category">
-                        New
-                    </div>
-                    <div class="home-center-category">
+                    <div id="filter-unreaden" onclick="filterMessages(event, 'unreaden')" class="home-center-category category-normal">
                         Unreaden
                     </div>
-                    <div class="home-center-category">
+                    <div id="filter-readen" onclick="filterMessages(event, 'readen')" class="home-center-category category-normal">
                         Readen
                     </div>
-                    <div class="home-center-category">
+                    <div id="filter-archived" onclick="filterMessages(event, 'archived')" class="home-center-category category-normal">
                         Archived
+                    </div>
+                    <div id="filter-sent" onclick="filterMessages(event, 'sent')" class="home-center-category category-normal">
+                        Sent
                     </div>
                 </div>
                 <div class="home-center-horizontal-elements">
@@ -36,33 +38,15 @@
                         <i class="fa-solid fa-trash-can"></i>
                     </div>
                     <div class="home-center-horizontal-messages">
-                        <div class="home-center-horizontal-messages-list">
-                            <div class="home-center-horizontal-messages-list-message unreaden">
-                                <div class="home-center-horizontal-messages-list-message-box ratio-onebyone unreaden-box">
-                                    <i class="fa-solid fa-exclamation"></i>
-                                </div>
-                                <div class=home-center-horizontal-messages-list-message-message>
-                                    <span>Mr.Clinton</span>
-                                    <span>Hello Kacper, on pre...</span>
-                                </div>
-                                <div class="home-center-horizontal-messages-list-message-date">
-                                    <span>2024-04-16</span>
-                                    <span>12:30</span>
-                                </div>
-                            </div>
-                            <div class="home-center-horizontal-messages-list-message readen">
-                                <div class="home-center-horizontal-messages-list-message-box ratio-onebyone readen-box">
-                                    <i class="fa-solid fa-exclamation"></i>
-                                </div>
-                                <div class=home-center-horizontal-messages-list-message-message>
-                                    <span>Mr.Clinton</span>
-                                    <span>Hello Kacper, on pre...</span>
-                                </div>
-                                <div class="home-center-horizontal-messages-list-message-date">
-                                    <span>2024-04-16</span>
-                                    <span>12:30</span>
-                                </div>
-                            </div>
+                        <div id="messageHolder" class="home-center-horizontal-messages-list"></div>
+                        <div class="home-center-horizontal-messages-page">
+                            <button id="changePageLeft" class="ratio-onebyone">
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </button>
+                            <input id="pageInput" class="ratio-onebyone" type="number" min="1" value="1"/>
+                            <button id="changePageRight" class="ratio-onebyone">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
                         </div>
                         <button class="home-center-horizontal-messages-reply ratio-onebyone">
                             <i class="fa-solid fa-paper-plane"></i>

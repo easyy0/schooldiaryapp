@@ -20,7 +20,22 @@ public class NewsService {
         this.userService = userService;
     }
 
-    public Set<News> getUserNews() throws UserNotFoundException {
-        return newsRepository.findAllByUserId(userService.getLoggedInUser().getId());
+    public Set<News> getUserNews(Long userId) throws UserNotFoundException {
+        return newsRepository.findAllByUserIdOrderByIdDesc(userId == null ? userService.getLoggedInUser().getId() :
+                userId);
+    }
+
+    public News saveUserNews(News news) {
+        try {
+            Set<News> userNews = getUserNews(news.getUser().getId());
+            if (userNews.size() >= 7) {
+                // Usuń najstarszą wiadomość
+                News oldestNews = userNews.stream().toList().get(userNews.size() - 1);
+                newsRepository.delete(oldestNews);
+            }
+            return newsRepository.save(news);
+        } catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
