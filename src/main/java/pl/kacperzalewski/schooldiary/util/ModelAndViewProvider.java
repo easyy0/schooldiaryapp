@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import pl.kacperzalewski.schooldiary.entity.CustomUserDetails;
 import pl.kacperzalewski.schooldiary.exception.UserNotFoundException;
-import pl.kacperzalewski.schooldiary.repository.NewsRepository;
+import pl.kacperzalewski.schooldiary.service.MessageService;
 import pl.kacperzalewski.schooldiary.service.UserService;
 
 import java.util.Set;
@@ -15,11 +15,14 @@ import java.util.Set;
 @Scope("singleton")
 public class ModelAndViewProvider {
 
-    private UserService userService;
+    private final UserService userService;
+
+    private final MessageService messageService;
 
     @Autowired
-    public ModelAndViewProvider(UserService userService) {
+    public ModelAndViewProvider(UserService userService, MessageService messageService) {
         this.userService = userService;
+        this.messageService = messageService;
     }
 
     public ModelAndView setupMavGlobalData(String viewName) {
@@ -28,6 +31,7 @@ public class ModelAndViewProvider {
             CustomUserDetails user = userService.getLoggedInUser();
             Set<String> userRoles = UserUtils.getRolesAsString(user);
             mav.addObject("user_roles", userRoles);
+            mav.addObject("msgCount", messageService.getNewMessageCount());
             return mav;
         } catch (UserNotFoundException e) {
             return null;
