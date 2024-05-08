@@ -5,7 +5,6 @@
     import lombok.Data;
     import lombok.NoArgsConstructor;
     import lombok.ToString;
-    import pl.kacperzalewski.schooldiary.entity.enums.MessageStatus;
     import pl.kacperzalewski.schooldiary.entity.enums.MessageType;
 
     import java.time.LocalDateTime;
@@ -30,19 +29,16 @@
         @JoinColumn(name = "senderId")
         private User sender;
 
-        @ManyToMany
+        @ManyToMany(cascade = CascadeType.ALL)
         @JoinTable(
-                name = "message_recipients",
+                name = "message_recipients_connector",
                 joinColumns = @JoinColumn(name = "messageId"),
-                inverseJoinColumns = @JoinColumn(name = "userId")
+                inverseJoinColumns = @JoinColumn(name = "messageRecipientId")
         )
-        private Set<User> recipients;
+        private Set<MessageRecipient> recipients;
 
         @Enumerated(EnumType.STRING)
         private MessageType type;
-
-        @Enumerated(EnumType.STRING)
-        private MessageStatus status;
 
         private LocalDateTime date;
     }

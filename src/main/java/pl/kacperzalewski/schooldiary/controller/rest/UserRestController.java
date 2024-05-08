@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kacperzalewski.schooldiary.entity.Message;
+import pl.kacperzalewski.schooldiary.entity.MessageRecipient;
 import pl.kacperzalewski.schooldiary.entity.User;
 import pl.kacperzalewski.schooldiary.entity.UserRole;
 import pl.kacperzalewski.schooldiary.entity.enums.MessageStatus;
@@ -23,6 +24,7 @@ public class UserRestController {
 
     @Autowired
     public UserRestController(UserRepository userRepository, MessageService messageService) {
+        System.out.println("STARTING");
         this.userRepository = userRepository;
         this.messageService = messageService;
 
@@ -56,67 +58,80 @@ public class UserRestController {
         System.out.println("USER3 SAVED!");
 
         for (int i = 0; i < 10; i++) {
+            MessageRecipient messageRecipient = new MessageRecipient();
+            messageRecipient.setRecipient(user3);
+            messageRecipient.setMessageStatus(MessageStatus.UNREADEN);
             Message message = new Message();
             message.setSender(user2);
-            message.setRecipients(Set.of(user3));
+            message.setRecipients(Set.of(messageRecipient));
             message.setType(MessageType.DEFAULT);
             message.setDescription("Admin message generated automatically with account creation, please do not reply");
-            message.setStatus(MessageStatus.UNREADEN);
             message.setDate(LocalDateTime.now());
             messageService.saveMessage(message);
         }
 
         for (int i = 0; i < 10; i++) {
+            MessageRecipient messageRecipient = new MessageRecipient();
+            messageRecipient.setRecipient(user3);
+            messageRecipient.setMessageStatus(MessageStatus.UNREADEN);
             Message message = new Message();
             message.setSender(user2);
-            message.setRecipients(Set.of(user3));
+            message.setRecipients(Set.of(messageRecipient));
             message.setType(MessageType.IMPORTANT);
             message.setDescription("Admin message generated automatically with account creation, please do not reply");
-            message.setStatus(MessageStatus.UNREADEN);
             message.setDate(LocalDateTime.now());
             messageService.saveMessage(message);
         }
 
         for (int i = 0; i < 10; i++) {
+            MessageRecipient messageRecipient = new MessageRecipient();
+            messageRecipient.setRecipient(user3);
+            messageRecipient.setMessageStatus(MessageStatus.READEN);
             Message message = new Message();
             message.setSender(user2);
-            message.setRecipients(Set.of(user3));
+            message.setRecipients(Set.of(messageRecipient));
             message.setType(MessageType.DEFAULT);
             message.setDescription("Admin message generated automatically with account creation, please do not reply");
-            message.setStatus(MessageStatus.READEN);
             message.setDate(LocalDateTime.now());
             messageService.saveMessage(message);
         }
 
         for (int i = 0; i < 10; i++) {
+            MessageRecipient messageRecipient = new MessageRecipient();
+            messageRecipient.setRecipient(user3);
+            messageRecipient.setMessageStatus(MessageStatus.READEN);
             Message message = new Message();
             message.setSender(user2);
-            message.setRecipients(Set.of(user3));
+            message.setRecipients(Set.of(messageRecipient));
             message.setType(MessageType.IMPORTANT);
             message.setDescription("Admin message generated automatically with account creation, please do not reply");
-            message.setStatus(MessageStatus.READEN);
             message.setDate(LocalDateTime.now());
             messageService.saveMessage(message);
         }
 
         for (int i = 0; i < 10; i++) {
+            MessageRecipient messageRecipient = new MessageRecipient();
+            messageRecipient.setRecipient(user3);
+            messageRecipient.setMessageStatus(MessageStatus.UNREADEN);
+            messageRecipient.setArchived(true);
             Message message = new Message();
             message.setSender(user2);
-            message.setRecipients(Set.of(user3));
-            message.setType(MessageType.ARCHIVED);
+            message.setRecipients(Set.of(messageRecipient));
+            message.setType(MessageType.DEFAULT);
             message.setDescription("Example of archived messages");
-            message.setStatus(MessageStatus.READEN);
             message.setDate(LocalDateTime.now());
             messageService.saveMessage(message);
         }
 
         for (int i = 0; i < 3; i++) {
+            MessageRecipient messageRecipient = new MessageRecipient();
+            messageRecipient.setRecipient(user3);
+            messageRecipient.setMessageStatus(MessageStatus.READEN);
             Message message = new Message();
             message.setSender(user2);
-            message.setRecipients(Set.of(user3));
+            message.setRecipients(Set.of(messageRecipient));
             message.setType(MessageType.SENT);
             message.setDescription("Message sent by me");
-            message.setStatus(MessageStatus.READEN);
             message.setDate(LocalDateTime.now());
             messageService.saveMessage(message);
         }

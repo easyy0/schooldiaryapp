@@ -2,9 +2,12 @@ package pl.kacperzalewski.schooldiary.controller.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pl.kacperzalewski.schooldiary.dto.MessageDto;
 import pl.kacperzalewski.schooldiary.entity.Message;
 import pl.kacperzalewski.schooldiary.exception.UserNotFoundException;
 import pl.kacperzalewski.schooldiary.service.MessageService;
@@ -20,8 +23,8 @@ public class RestMessageController {
     }
 
     @GetMapping("/api/messages")
-    public Page<Message> getMessages(@RequestParam(required = false) String messagesFilter,
-                                     @RequestParam(required = false) Integer page) {
+    public Page<MessageDto> getMessages(@RequestParam(required = false) String messagesFilter,
+                                        @RequestParam(required = false) Integer page) {
         try {
             return messageService.getUserMessages(messagesFilter, page);
         } catch (UserNotFoundException e) {

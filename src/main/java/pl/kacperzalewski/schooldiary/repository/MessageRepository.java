@@ -10,17 +10,24 @@ import pl.kacperzalewski.schooldiary.entity.enums.MessageType;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-    @Query("SELECT COUNT(m) FROM Message m JOIN m.recipients r where r.id = :userId AND m.status = 'UNREADEN'")
-    long countMessagesByRecipientId(Long userId);
+    @Query("SELECT COUNT(m) FROM Message m JOIN m.recipients r where r.recipient.id = :userId AND r.messageStatus = " +
+            "'UNREADEN'")
+    long countMessagesByRecipientUserId(Long userId);
 
-    @Query("SELECT m FROM Message m JOIN m.recipients r WHERE r.id = :userId AND m.type NOT IN ('ARCHIVED', 'SENT') " +
-            "ORDER BY m.date ASC")
+    @Query("SELECT m FROM Message m JOIN m.recipients r WHERE r.recipient.id = :userId AND m.type != 'SENT' AND r.isArchived = FALSE ORDER BY" +
+            " m.date ASC")
     Page<Message> findMessagesByRecipient(Long userId, Pageable pageable);
 
-    @Query("SELECT m FROM Message m JOIN m.recipients r WHERE r.id = :userId AND m.status = :messageStatus AND m.type NOT IN ('ARCHIVED', 'SENT') ORDER BY " +
-            "m.date ASC")
+    @Query("SELECT m FROM Message m JOIN m.recipients r WHERE r.recipient.id = :userId AND r.isArchived = TRUE ORDER " +
+            "BY" +
+            " m.date ASC")
+    Page<Message> findArchivedMessagesByRecipient(Long userId, Pageable pageable);
+
+    @Query("SELECT m FROM Message m JOIN m.recipients r WHERE r.recipient.id = :userId AND r.messageStatus = " +
+            ":messageStatus AND m.type != 'SENT' AND r.isArchived = FALSE ORDER BY m.date ASC")
     Page<Message> findMessagesByRecipient(Long userId, MessageStatus messageStatus, Pageable pageable);
 
-    @Query("SELECT m FROM Message m JOIN m.recipients r WHERE r.id = :userId AND m.type = :messageType ORDER BY m.date ASC")
-    Page<Message> findMessagesByRecipient(Long userId, MessageType messageType, Pageable pageable);
+   @Query("SELECT m FROM Message m JOIN m.recipients r WHERE r.recipient.id = :userId AND m.type = :messageType AND r.isArchived = FALSE " +
+           "ORDER BY m.date ASC")
+   Page<Message> findMessagesByRecipient(Long userId, MessageType messageType, Pageable pageable);
 }
