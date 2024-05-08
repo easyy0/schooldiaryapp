@@ -263,7 +263,7 @@ body {
 
 .action-pressed {
     text-shadow: 0px calc(0.204vw) calc(0.308vw) var(--shadow);
-    color: #979797;
+    color: #979797 !important;
     transition: text-shadow 0.3s, color 0.3s;
 }
 

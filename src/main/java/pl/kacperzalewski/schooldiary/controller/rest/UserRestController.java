@@ -109,19 +109,19 @@ public class UserRestController {
             messageService.saveMessage(message);
         }
 
-        for (int i = 0; i < 10; i++) {
-            MessageRecipient messageRecipient = new MessageRecipient();
-            messageRecipient.setRecipient(user3);
-            messageRecipient.setMessageStatus(MessageStatus.UNREADEN);
-            messageRecipient.setArchived(true);
-            Message message = new Message();
-            message.setSender(user2);
-            message.setRecipients(Set.of(messageRecipient));
-            message.setType(MessageType.DEFAULT);
-            message.setDescription("Example of archived messages");
-            message.setDate(LocalDateTime.now());
-            messageService.saveMessage(message);
-        }
+//        for (int i = 0; i < 10; i++) {
+//            MessageRecipient messageRecipient = new MessageRecipient();
+//            messageRecipient.setRecipient(user3);
+//            messageRecipient.setMessageStatus(MessageStatus.UNREADEN);
+//            messageRecipient.setArchived(true);
+//            Message message = new Message();
+//            message.setSender(user2);
+//            message.setRecipients(Set.of(messageRecipient));
+//            message.setType(MessageType.DEFAULT);
+//            message.setDescription("Example of archived messages");
+//            message.setDate(LocalDateTime.now());
+//            messageService.saveMessage(message);
+//        }
 
         for (int i = 0; i < 3; i++) {
             MessageRecipient messageRecipient = new MessageRecipient();

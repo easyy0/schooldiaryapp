@@ -14,6 +14,8 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
             "'UNREADEN'")
     long countMessagesByRecipientUserId(Long userId);
 
+    Message findMessageByIdAndRecipientsRecipientId(Long id, Long userId);
+
     @Query("SELECT m FROM Message m JOIN m.recipients r WHERE r.recipient.id = :userId AND m.type != 'SENT' AND r.isArchived = FALSE ORDER BY" +
             " m.date ASC")
     Page<Message> findMessagesByRecipient(Long userId, Pageable pageable);

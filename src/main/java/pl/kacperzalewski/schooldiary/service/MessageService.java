@@ -91,4 +91,28 @@ public class MessageService {
         });
         messageRepository.save(message);
     }
+
+    public Message updateMessage(long messageId, String method) throws UserNotFoundException {
+        Long userId = userService.getLoggedInUser().getId();
+        Message actualMessage =  messageRepository.findMessageByIdAndRecipientsRecipientId(messageId, userId);
+
+        switch (method) {
+            case "readen":
+                actualMessage.getRecipients().forEach(r -> {
+                    if (r.getRecipient().getId().equals(userId)) {
+                        r.setMessageStatus(MessageStatus.READEN);
+                    }
+                });
+                break;
+            case "archive":
+                actualMessage.getRecipients().forEach(r -> {
+                    if (r.getRecipient().getId().equals(userId)) {
+                        r.setArchived(true);
+                    }
+                });
+                break;
+        }
+
+        return messageRepository.save(actualMessage);
+    }
 }

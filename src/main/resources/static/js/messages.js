@@ -11,7 +11,6 @@ let activeCategory = 'all'
 let activeActions = null
 
 function getMessageView(data) {
-    console.log(data)
     const { sender, description, date, status, archived, type } = data;
     let boxIcon = ''
     switch (type) {
@@ -70,18 +69,19 @@ function loadMessages(filter) {
             thisMessage.setAttribute('id', message.id);
             thisMessage.addEventListener('click', () => {
                 if (activeActions) {
-                    switch (activeActions) {
-                        case 'readen':
+                    const actionUrl = new URL('http://localhost:8080/api/messages');
+                    actionUrl.searchParams.append('messageId', thisMessage.getAttribute('id'));
+                    actionUrl.searchParams.append('method', activeActions);
 
-                            break;
-                        case 'archive':
+                    console.log(actionUrl);
 
-                            break;
-                        case 'delete':
-
-                            break;
-                    }
-                    console.log(thisMessage.getAttribute('id'))
+                    fetch(actionUrl, {
+                        method: 'PATCH',
+                    }).then(response => {
+                        if (response.ok) {
+                            loadMessages(activeCategory)
+                        }
+                    })
                 }
             })
         })
