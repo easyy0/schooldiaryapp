@@ -29,8 +29,8 @@ public class ModelAndViewProvider {
         try {
             ModelAndView mav = new ModelAndView(viewName);
             CustomUserDetails user = userService.getLoggedInUser();
-            Set<String> userRoles = UserUtils.getRolesAsString(user);
-            mav.addObject("user_roles", userRoles);
+            String userRole = UserUtils.getRolesAsString(user);
+            mav.addObject("user_role", userRole);
             mav.addObject("msgCount", messageService.getNewMessageCount());
             return mav;
         } catch (UserNotFoundException e) {

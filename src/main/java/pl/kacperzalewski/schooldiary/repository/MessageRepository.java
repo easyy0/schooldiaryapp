@@ -11,7 +11,7 @@ import pl.kacperzalewski.schooldiary.entity.enums.MessageType;
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
     @Query("SELECT COUNT(m) FROM Message m JOIN m.recipients r where r.recipient.id = :userId AND r.messageStatus = " +
-            "'UNREADEN'")
+            "'UNREADEN' AND r.isArchived = FALSE")
     long countMessagesByRecipientUserId(Long userId);
 
     Message findMessageByIdAndRecipientsRecipientId(Long id, Long userId);

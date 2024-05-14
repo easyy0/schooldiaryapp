@@ -1,44 +1,46 @@
-    package pl.kacperzalewski.schooldiary.entity;
+package pl.kacperzalewski.schooldiary.entity;
 
-    import jakarta.persistence.*;
-    import lombok.AllArgsConstructor;
-    import lombok.Data;
-    import lombok.NoArgsConstructor;
-    import lombok.ToString;
-    import pl.kacperzalewski.schooldiary.entity.enums.MessageType;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import pl.kacperzalewski.schooldiary.entity.enums.MessageType;
 
-    import java.time.LocalDateTime;
-    import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.Set;
 
-    @Entity
-    @Data
-    @ToString
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Table(name = "message")
-    public class Message {
+@Entity
+@Data
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "message")
+public class Message {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        @Column(name = "id")
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
 
-        private String description;
+    private String title;
 
-        @ManyToOne
-        @JoinColumn(name = "senderId")
-        private User sender;
+    private String description;
 
-        @ManyToMany(cascade = CascadeType.ALL)
-        @JoinTable(
-                name = "message_recipients_connector",
-                joinColumns = @JoinColumn(name = "messageId"),
-                inverseJoinColumns = @JoinColumn(name = "messageRecipientId")
-        )
-        private Set<MessageRecipient> recipients;
+    @ManyToOne
+    @JoinColumn(name = "senderId")
+    private User sender;
 
-        @Enumerated(EnumType.STRING)
-        private MessageType type;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "message_recipients_connector",
+            joinColumns = @JoinColumn(name = "messageId"),
+            inverseJoinColumns = @JoinColumn(name = "messageRecipientId")
+    )
+    private Set<MessageRecipient> recipients;
 
-        private LocalDateTime date;
-    }
+    @Enumerated(EnumType.STRING)
+    private MessageType type;
+
+    private LocalDateTime date;
+}

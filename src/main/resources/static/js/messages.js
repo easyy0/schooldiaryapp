@@ -11,7 +11,8 @@ let activeCategory = 'all'
 let activeActions = null
 
 function getMessageView(data) {
-    const { sender, description, date, status, archived, type } = data;
+    const { sender, title, description, date, status, archived, type } = data;
+    console.log(title)
     let boxIcon = ''
     switch (type) {
         case 'IMPORTANT':
@@ -34,7 +35,7 @@ function getMessageView(data) {
         </div>
         <div class="home-center-horizontal-messages-list-message-message">
             <span>${sender.firstname} ${sender.lastname}</span>
-            <span>${description.substring(0, 20)}...</span>
+            <span>${title.substring(0, 20)}...</span>
         </div>
         <div class="home-center-horizontal-messages-list-message-date">
             <span>${date.substring(0, 10)}</span>
@@ -66,11 +67,11 @@ function loadMessages(filter) {
             const messageHTML = getMessageView(message)
             messageHolder.insertAdjacentHTML("beforeend", messageHTML);
             const thisMessage = messageHolder.lastElementChild;
-            thisMessage.setAttribute('id', message.id);
+            thisMessage.setAttribute('msgId', message.id);
             thisMessage.addEventListener('click', () => {
                 if (activeActions) {
                     const actionUrl = new URL('http://localhost:8080/api/messages');
-                    actionUrl.searchParams.append('messageId', thisMessage.getAttribute('id'));
+                    actionUrl.searchParams.append('messageId', thisMessage.getAttribute('msgId'));
                     actionUrl.searchParams.append('method', activeActions);
 
                     console.log(actionUrl);

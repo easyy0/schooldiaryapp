@@ -3,11 +3,10 @@ package pl.kacperzalewski.schooldiary.controller.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.kacperzalewski.schooldiary.dto.MessageDto;
-import pl.kacperzalewski.schooldiary.entity.Message;
+import pl.kacperzalewski.schooldiary.dto.MessageFormDTO;
 import pl.kacperzalewski.schooldiary.exception.UserNotFoundException;
 import pl.kacperzalewski.schooldiary.service.MessageService;
 

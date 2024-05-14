@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.kacperzalewski.schooldiary.dto.MessageDto;
+import pl.kacperzalewski.schooldiary.dto.MessageFormDTO;
 import pl.kacperzalewski.schooldiary.entity.Message;
 import pl.kacperzalewski.schooldiary.entity.MessageRecipient;
 import pl.kacperzalewski.schooldiary.entity.News;
@@ -14,6 +15,8 @@ import pl.kacperzalewski.schooldiary.entity.enums.MessageType;
 import pl.kacperzalewski.schooldiary.exception.UserNotFoundException;
 import pl.kacperzalewski.schooldiary.repository.MessageRepository;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -63,6 +66,7 @@ public class MessageService {
             MessageRecipient recipient = message.getRecipients().stream().filter(r -> r.getRecipient().getId().equals(userId)).findFirst().get();
             MessageDto messageDto = new MessageDto();
             messageDto.setId(message.getId());
+            messageDto.setTitle(message.getTitle());
             messageDto.setDescription(message.getDescription());
             messageDto.setSender(message.getSender());
             messageDto.setType(message.getType());
@@ -77,6 +81,33 @@ public class MessageService {
 
     public long getNewMessageCount() throws UserNotFoundException {
         return messageRepository.countMessagesByRecipientUserId(userService.getLoggedInUser().getId());
+    }
+
+    public void saveMessageForm(MessageFormDTO messageFormDTO) throws UserNotFoundException {
+        Message message = new Message();
+
+        if (messageFormDTO.getIsImportant() == null) {
+            messageFormDTO.setIsImportant(false);
+        }
+
+        Set<MessageRecipient> recipientSet = new HashSet<>();
+        String[] receiversArray = messageFormDTO.getReceivers().split(",");
+
+        for (String receiver : receiversArray) {
+            MessageRecipient messageRecipient = new MessageRecipient();
+            messageRecipient.setRecipient(userService.getUserById(Integer.parseInt(receiver.trim())));
+            messageRecipient.setMessageStatus(MessageStatus.UNREADEN);
+            recipientSet.add(messageRecipient);
+        }
+
+        message.setTitle(messageFormDTO.getTitle());
+        message.setDescription(messageFormDTO.getMessage());
+        message.setType(messageFormDTO.getIsImportant() ? MessageType.IMPORTANT : MessageType.DEFAULT);
+        message.setSender(userService.getLoggedInUser());
+        message.setDate(LocalDateTime.now());
+
+        message.setRecipients(recipientSet);
+        messageRepository.save(message);
     }
 
     public void saveMessage(Message message) {
