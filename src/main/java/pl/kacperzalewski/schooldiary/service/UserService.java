@@ -106,8 +106,8 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
-    public Set<UserDTO> getUsers() {
-        return userRepository.findByRolesNotContaining(UserRole.TEACHER).stream().map(user -> {
+    public Set<UserDTO> getUsers() throws UserNotFoundException {
+        return userRepository.findByRolesNotContaining(getLoggedInUser().getId(), UserRole.TEACHER).stream().map(user -> {
             UserDTO userDTO = new UserDTO();
             userDTO.setId(user.getId());
             userDTO.setFirstname(user.getFirstname());

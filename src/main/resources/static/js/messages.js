@@ -14,23 +14,21 @@ function getMessageView(data) {
     const { sender, title, description, date, status, archived, type } = data;
     console.log(title)
     let boxIcon = ''
-    switch (type) {
-        case 'IMPORTANT':
-            boxIcon = '<i class="fa-solid fa-exclamation"></i>'
-            break
-        case 'SENT':
-            boxIcon = '<i class="fa-solid fa-paper-plane"></i>'
-            break
+    if (type === 'IMPORTANT') {
+        boxIcon = '<i class="fa-solid fa-exclamation"></i>'
     }
     if (archived) {
         boxIcon = '<i class="fa-solid fa-box-archive"></i>'
     } else if (status === 'UNREADEN' && type === 'DEFAULT') {
         boxIcon = '<i class="fa-solid fa-bell"></i>'
+    } else if (status === 'SENT') {
+        boxIcon = '<i class="fa-solid fa-paper-plane"></i>'
     }
 
-    return `<button class="home-center-horizontal-messages-list-message ${status === 'READEN' ? 'readen' :
-    'unreaden'}">
-        <div class="home-center-horizontal-messages-list-message-box ratio-onebyone ${status === 'READEN' ? 'readen-box' : 'unreaden-box'}">
+    return `<button class="home-center-horizontal-messages-list-message ${status === 'UNREADEN' ? 'unreaden' :
+    'readen'}">
+        <div class="home-center-horizontal-messages-list-message-box ratio-onebyone ${status === 'UNREADEN' ?
+        'unreaden-box' : 'readen-box'}">
             ${boxIcon}
         </div>
         <div class="home-center-horizontal-messages-list-message-message">
@@ -74,8 +72,6 @@ function loadMessages(filter) {
                     actionUrl.searchParams.append('messageId', thisMessage.getAttribute('msgId'));
                     actionUrl.searchParams.append('method', activeActions);
 
-                    console.log(actionUrl);
-
                     fetch(actionUrl, {
                         method: 'PATCH',
                     }).then(response => {
@@ -83,6 +79,10 @@ function loadMessages(filter) {
                             loadMessages(activeCategory)
                         }
                     })
+                } else {
+                    const messageUrl = new URL('http://localhost:8080/messages/read');
+                    messageUrl.searchParams.append('messageId', thisMessage.getAttribute('msgId'));
+                    window.location.href = messageUrl;
                 }
             })
         })

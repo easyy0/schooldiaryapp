@@ -18,7 +18,6 @@ import pl.kacperzalewski.schooldiary.repository.MessageRepository;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class MessageService {
@@ -54,6 +53,70 @@ public class MessageService {
         return messages;
     }
 
+    public void saveMessageForm(MessageFormDTO messageFormDTO) throws UserNotFoundException {
+        System.out.println("Message: " + messageFormDTO.getMessage());
+        Message message = new Message();
+
+        if (messageFormDTO.getIsImportant() == null) {
+            messageFormDTO.setIsImportant(false);
+        }
+
+        Set<MessageRecipient> recipientSet = new HashSet<>();
+        String[] receiversArray = messageFormDTO.getReceivers().split(",");
+
+        for (String receiver : receiversArray) {
+            MessageRecipient messageRecipient = new MessageRecipient();
+            messageRecipient.setRecipient(userService.getUserById(Integer.parseInt(receiver.trim())));
+            messageRecipient.setMessageStatus(MessageStatus.UNREADEN);
+            recipientSet.add(messageRecipient);
+        }
+
+        MessageRecipient senderRecipient = new MessageRecipient();
+        senderRecipient.setRecipient(userService.getLoggedInUser());
+        senderRecipient.setMessageStatus(MessageStatus.SENT);
+        recipientSet.add(senderRecipient);
+
+        message.setTitle(messageFormDTO.getTitle());
+        message.setDescription(messageFormDTO.getMessage());
+        message.setType(messageFormDTO.getIsImportant() ? MessageType.IMPORTANT : MessageType.DEFAULT);
+        message.setSender(userService.getLoggedInUser());
+        message.setDate(LocalDateTime.now());
+
+        message.setRecipients(recipientSet);
+        messageRepository.save(message);
+    }
+
+    public Message updateMessage(long messageId, String method) throws UserNotFoundException {
+        Long userId = userService.getLoggedInUser().getId();
+        Message actualMessage =  messageRepository.findMessageByIdAndRecipientsRecipientId(messageId, userId);
+
+        switch (method) {
+            case "readen":
+                actualMessage.getRecipients().forEach(r -> {
+                    if (r.getRecipient().getId().equals(userId)) {
+                        r.setMessageStatus(MessageStatus.READEN);
+                    }
+                });
+                break;
+            case "archive":
+                actualMessage.getRecipients().forEach(r -> {
+                    if (r.getRecipient().getId().equals(userId)) {
+                        r.setArchived(!r.isArchived());
+                    }
+                });
+                break;
+            case "delete":
+                actualMessage.getRecipients().forEach(r -> {
+                    if (r.getRecipient().getId().equals(userId)) {
+                        r.setDeleted(true);
+                    }
+                });
+                break;
+        }
+
+        return messageRepository.save(actualMessage);
+    }
+
     public Page<MessageDto> getUserMessages(String messagesFilter, int page) throws UserNotFoundException {
         int size = 6;
         Pageable pageable = PageRequest.of(page - 1, size);
@@ -83,33 +146,6 @@ public class MessageService {
         return messageRepository.countMessagesByRecipientUserId(userService.getLoggedInUser().getId());
     }
 
-    public void saveMessageForm(MessageFormDTO messageFormDTO) throws UserNotFoundException {
-        Message message = new Message();
-
-        if (messageFormDTO.getIsImportant() == null) {
-            messageFormDTO.setIsImportant(false);
-        }
-
-        Set<MessageRecipient> recipientSet = new HashSet<>();
-        String[] receiversArray = messageFormDTO.getReceivers().split(",");
-
-        for (String receiver : receiversArray) {
-            MessageRecipient messageRecipient = new MessageRecipient();
-            messageRecipient.setRecipient(userService.getUserById(Integer.parseInt(receiver.trim())));
-            messageRecipient.setMessageStatus(MessageStatus.UNREADEN);
-            recipientSet.add(messageRecipient);
-        }
-
-        message.setTitle(messageFormDTO.getTitle());
-        message.setDescription(messageFormDTO.getMessage());
-        message.setType(messageFormDTO.getIsImportant() ? MessageType.IMPORTANT : MessageType.DEFAULT);
-        message.setSender(userService.getLoggedInUser());
-        message.setDate(LocalDateTime.now());
-
-        message.setRecipients(recipientSet);
-        messageRepository.save(message);
-    }
-
     public void saveMessage(Message message) {
         message.getRecipients().forEach((messageRecipient) -> {
             News news = new News();
@@ -123,27 +159,26 @@ public class MessageService {
         messageRepository.save(message);
     }
 
-    public Message updateMessage(long messageId, String method) throws UserNotFoundException {
-        Long userId = userService.getLoggedInUser().getId();
-        Message actualMessage =  messageRepository.findMessageByIdAndRecipientsRecipientId(messageId, userId);
-
-        switch (method) {
-            case "readen":
-                actualMessage.getRecipients().forEach(r -> {
-                    if (r.getRecipient().getId().equals(userId)) {
-                        r.setMessageStatus(MessageStatus.READEN);
-                    }
-                });
-                break;
-            case "archive":
-                actualMessage.getRecipients().forEach(r -> {
-                    if (r.getRecipient().getId().equals(userId)) {
-                        r.setArchived(true);
-                    }
-                });
-                break;
+    public MessageDto getMessageById(Long messageId) {
+        try {
+            Long userId = userService.getLoggedInUser().getId();
+            Message message =
+                    messageRepository.findMessageByIdAndRecipientsRecipientId(messageId, userId);
+            message.getRecipients().forEach(r -> {
+                if (r.getRecipient().getId().equals(userId) && r.getMessageStatus() != MessageStatus.SENT) {
+                    r.setMessageStatus(MessageStatus.READEN);
+                }
+            });
+            MessageDto messageDto = new MessageDto();
+            messageDto.setId(message.getId());
+            messageDto.setDescription(message.getDescription());
+            messageDto.setTitle(message.getTitle());
+            messageDto.setDate(message.getDate());
+            messageDto.setSender(message.getSender());
+            messageRepository.save(message);
+            return messageDto;
+        } catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
         }
-
-        return messageRepository.save(actualMessage);
     }
 }

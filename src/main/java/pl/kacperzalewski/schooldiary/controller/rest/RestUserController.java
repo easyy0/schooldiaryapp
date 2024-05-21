@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kacperzalewski.schooldiary.dto.UserDTO;
 import pl.kacperzalewski.schooldiary.entity.User;
+import pl.kacperzalewski.schooldiary.exception.UserNotFoundException;
 import pl.kacperzalewski.schooldiary.service.UserService;
 
 import java.util.Set;
@@ -20,7 +21,7 @@ public class RestUserController {
     }
 
     @GetMapping("/api/users")
-    public Set<UserDTO> getUsers() {
+    public Set<UserDTO> getUsers() throws UserNotFoundException {
         return userService.getUsers();
     }
 }

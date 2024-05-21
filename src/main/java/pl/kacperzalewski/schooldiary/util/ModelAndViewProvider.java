@@ -9,8 +9,6 @@ import pl.kacperzalewski.schooldiary.exception.UserNotFoundException;
 import pl.kacperzalewski.schooldiary.service.MessageService;
 import pl.kacperzalewski.schooldiary.service.UserService;
 
-import java.util.Set;
-
 @Component
 @Scope("singleton")
 public class ModelAndViewProvider {

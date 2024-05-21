@@ -22,5 +22,7 @@ public class MessageRecipient {
     @Enumerated(EnumType.STRING)
     private MessageStatus messageStatus;
 
-    private boolean isArchived;
+    private boolean isArchived = false;
+
+    private boolean isDeleted = false;
 }

@@ -16,6 +16,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     public User findById(int id);
 
-    @Query("SELECT u FROM User u WHERE u.role = :role")
-    Set<User> findByRolesNotContaining(@Param("role") UserRole role);
+    @Query("SELECT u FROM User u WHERE u.id != :userId AND u.role = :role")
+    Set<User> findByRolesNotContaining(Long userId, @Param("role") UserRole role);
 }

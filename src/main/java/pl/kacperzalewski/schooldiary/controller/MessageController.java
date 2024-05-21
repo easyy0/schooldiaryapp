@@ -1,13 +1,14 @@
 package pl.kacperzalewski.schooldiary.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import pl.kacperzalewski.schooldiary.dto.MessageDto;
 import pl.kacperzalewski.schooldiary.dto.MessageFormDTO;
 import pl.kacperzalewski.schooldiary.exception.UserNotFoundException;
 import pl.kacperzalewski.schooldiary.service.MessageService;
@@ -35,6 +36,14 @@ public class MessageController {
     @GetMapping("/messages/write")
     public ModelAndView getWriteMessageMAV() throws UserNotFoundException {
         return modelAndViewProvider.setupMavGlobalData("messageswrite");
+    }
+
+    @GetMapping("/messages/read")
+    public ModelAndView getMessageFromId(@RequestParam("messageId") long messageId) {
+        MessageDto message = messageService.getMessageById(messageId);
+        ModelAndView mav = modelAndViewProvider.setupMavGlobalData("messagesread");
+        mav.addObject("message", message);
+        return mav;
     }
 
     @PostMapping("/api/messages")
