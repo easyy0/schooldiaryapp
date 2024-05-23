@@ -12,7 +12,7 @@
     </button>
     <button class="home-topBar-page">
         <i class="fa-solid fa-table"></i>
-        <p>Lesson Plan</p>
+        <p>Timetable</p>
     </button>
     <button class="home-topBar-page">
         <i class="fa-solid fa-user-graduate"></i>
@@ -22,7 +22,7 @@
         <i class="fa-solid fa-chart-column"></i>
         <p>Frequence</p>
     </button>
-    <button th:if="${#sets.contains(user_roles, 'ADMIN') or #sets.contains(user_roles, 'TEACHER')}"
+    <button th:if="${user_role == 'ADMIN'} or ${user_role == 'TEACHER'}"
          class="home-topBar-page">
         <i class="fa-solid fa-person-chalkboard"></i>
         <p>Lessons</p>
@@ -43,7 +43,7 @@
         <i class="fa-solid fa-file-signature"></i>
         <p>Homeworks</p>
     </button>
-    <button th:if="${#sets.contains(user_roles, 'ADMIN')}" class="home-topBar-page">
+    <button th:if="${user_role == 'ADMIN'}" class="home-topBar-page">
         <i class="fa-solid fa-user-gear"></i>
         <p>Admin Panel</p>
     </button>

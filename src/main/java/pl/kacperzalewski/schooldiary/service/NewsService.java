@@ -29,7 +29,6 @@ public class NewsService {
         try {
             Set<News> userNews = getUserNews(news.getUser().getId());
             if (userNews.size() >= 7) {
-                // Usuń najstarszą wiadomość
                 News oldestNews = userNews.stream().toList().get(userNews.size() - 1);
                 newsRepository.delete(oldestNews);
             }

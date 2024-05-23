@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import pl.kacperzalewski.schooldiary.entity.enums.UserRole;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,9 +33,8 @@ public class User {
     private String firstname;
     private String lastname;
 
-    @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<UserRole> roles = new HashSet<>();
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
 
 }

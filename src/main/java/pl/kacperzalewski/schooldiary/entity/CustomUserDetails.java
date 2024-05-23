@@ -3,8 +3,6 @@ package pl.kacperzalewski.schooldiary.entity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import pl.kacperzalewski.schooldiary.entity.User;
-import pl.kacperzalewski.schooldiary.entity.UserRole;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,15 +16,12 @@ public class CustomUserDetails extends User implements UserDetails {
 
     public CustomUserDetails(User byUsername) {
         this.setId(byUsername.getId());
-        this.setRoles(byUsername.getRoles());
+        this.setRole(byUsername.getRole());
         this.username = byUsername.getUsername();
         this.password= byUsername.getPassword();
         List<GrantedAuthority> auths = new ArrayList<>();
 
-        for(UserRole role : byUsername.getRoles()){
-
-            auths.add(new SimpleGrantedAuthority(role.getName().toUpperCase()));
-        }
+        auths.add(new SimpleGrantedAuthority(byUsername.getRole().toString()));
         this.authorities = auths;
     }
 

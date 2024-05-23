@@ -90,7 +90,6 @@ body {
     justify-content: center;
     gap: 5%;
     color: white;
-    font-size: 2.04vw;
     width: 7%;
     height: 25%;
     background-color: var(--primary-blue);
@@ -98,9 +97,16 @@ body {
     box-shadow: 0px calc(0.208vw) calc(0.208vw) 0px rgba(0, 0, 0, 0.25) inset;
 }
 
-.home-center-horizontal-actions i:hover{
-    color: var(--hovered-blue);
+.home-center-horizontal-actions button {
+    font-size: 2.04vw;
+    background-color: transparent;
+    border: none;
+}
+
+.home-center-horizontal-actions button:hover{
+    color: var(--secondary-gray);
     cursor: pointer;
+    transition: color 0.3s;
 }
 
 .home-center-horizontal-messages {
@@ -247,6 +253,18 @@ body {
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
     background-color: var(--secondary-blue);
     transition: box-shadow 0.3s, background-color 0.3s;
+}
+
+.action-normal {
+    text-shadow: 0px calc(0.104vw) calc(0.208vw) var(--shadow);
+    color: white;
+    transition: text-shadow 0.3s, color 0.3s;
+}
+
+.action-pressed {
+    text-shadow: 0px calc(0.204vw) calc(0.308vw) var(--shadow);
+    color: #979797 !important;
+    transition: text-shadow 0.3s, color 0.3s;
 }
 
 .unreaden {

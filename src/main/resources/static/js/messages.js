@@ -2,35 +2,38 @@ let messageHolder = document.getElementById('messageHolder')
 let leftButton = document.getElementById('changePageLeft')
 let rightButton = document.getElementById('changePageRight')
 let pageInput = document.getElementById('pageInput')
+let readenButton = document.getElementById('readenButton')
+let archiveButton = document.getElementById('archiveButton')
+let deleteButton = document.getElementById('deleteButton')
 let currentPage = 1
 let maxPage = null
 let activeCategory = 'all'
+let activeActions = null
 
 function getMessageView(data) {
-    const { sender, description, date, status, type } = data;
+    const { sender, title, description, date, status, archived, type } = data;
+    console.log(title)
     let boxIcon = ''
-    switch (type) {
-        case 'IMPORTANT':
-            boxIcon = '<i class="fa-solid fa-exclamation"></i>'
-            break
-        case 'ARCHIVED':
-            boxIcon = '<i class="fa-solid fa-box-archive"></i>'
-            break
-        case 'SENT':
-            boxIcon = '<i class="fa-solid fa-paper-plane"></i>'
-            break
+    if (type === 'IMPORTANT') {
+        boxIcon = '<i class="fa-solid fa-exclamation"></i>'
     }
-    if (status === 'UNREADEN' && type === 'DEFAULT') {
+    if (archived) {
+        boxIcon = '<i class="fa-solid fa-box-archive"></i>'
+    } else if (status === 'UNREADEN' && type === 'DEFAULT') {
         boxIcon = '<i class="fa-solid fa-bell"></i>'
+    } else if (status === 'SENT') {
+        boxIcon = '<i class="fa-solid fa-paper-plane"></i>'
     }
 
-    return `<button class="home-center-horizontal-messages-list-message ${status === 'READEN' ? 'readen' : 'unreaden'}">
-        <div class="home-center-horizontal-messages-list-message-box ratio-onebyone ${status === 'READEN' ? 'readen-box' : 'unreaden-box'}">
+    return `<button class="home-center-horizontal-messages-list-message ${status === 'UNREADEN' ? 'unreaden' :
+    'readen'}">
+        <div class="home-center-horizontal-messages-list-message-box ratio-onebyone ${status === 'UNREADEN' ?
+        'unreaden-box' : 'readen-box'}">
             ${boxIcon}
         </div>
         <div class="home-center-horizontal-messages-list-message-message">
             <span>${sender.firstname} ${sender.lastname}</span>
-            <span>${description.substring(0, 20)}...</span>
+            <span>${title.substring(0, 20)}...</span>
         </div>
         <div class="home-center-horizontal-messages-list-message-date">
             <span>${date.substring(0, 10)}</span>
@@ -61,6 +64,27 @@ function loadMessages(filter) {
         data.content.forEach(message => {
             const messageHTML = getMessageView(message)
             messageHolder.insertAdjacentHTML("beforeend", messageHTML);
+            const thisMessage = messageHolder.lastElementChild;
+            thisMessage.setAttribute('msgId', message.id);
+            thisMessage.addEventListener('click', () => {
+                if (activeActions) {
+                    const actionUrl = new URL('http://localhost:8080/api/messages');
+                    actionUrl.searchParams.append('messageId', thisMessage.getAttribute('msgId'));
+                    actionUrl.searchParams.append('method', activeActions);
+
+                    fetch(actionUrl, {
+                        method: 'PATCH',
+                    }).then(response => {
+                        if (response.ok) {
+                            loadMessages(activeCategory)
+                        }
+                    })
+                } else {
+                    const messageUrl = new URL('http://localhost:8080/messages/read');
+                    messageUrl.searchParams.append('messageId', thisMessage.getAttribute('msgId'));
+                    window.location.href = messageUrl;
+                }
+            })
         })
     })
 }
@@ -112,6 +136,49 @@ pageInput.addEventListener('keyup', (e) => {
         loadMessages(activeCategory)
     }
 })
+
+function resetActionButtons() {
+    readenButton.classList.remove('action-pressed')
+    readenButton.classList.add('action-normal')
+    archiveButton.classList.remove('action-pressed')
+    archiveButton.classList.add('action-normal')
+    deleteButton.classList.remove('action-pressed')
+    deleteButton.classList.add('action-normal')
+}
+
+readenButton.addEventListener('click', () => {
+    resetActionButtons()
+    if (activeActions === 'readen') {
+        activeActions = null;
+    } else {
+        readenButton.classList.remove('action-normal')
+        readenButton.classList.add('action-pressed')
+        activeActions = 'readen';
+    }
+})
+
+archiveButton.addEventListener('click', () => {
+    resetActionButtons()
+    if (activeActions === 'archive') {
+        activeActions = null;
+    } else {
+        archiveButton.classList.remove('action-normal')
+        archiveButton.classList.add('action-pressed')
+        activeActions = 'archive';
+    }
+})
+
+deleteButton.addEventListener('click', () => {
+    resetActionButtons()
+    if (activeActions === 'delete') {
+        activeActions = null;
+    } else {
+        deleteButton.classList.remove('action-normal')
+        deleteButton.classList.add('action-pressed')
+        activeActions = 'delete';
+    }
+})
+
 
 window.addEventListener('DOMContentLoaded', () => {
     loadMessages(activeCategory)
