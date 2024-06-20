@@ -31,6 +31,104 @@ public class MessageService {
         this.messageRepository = messageRepository;
         this.userService = userService;
         this.newsService = newsService;
+
+        Message message = new Message();
+        message.setTitle("Tytul wiadomosci");
+        message.setDescription("Opis wiadomosci");
+        message.setDate(LocalDateTime.now());
+        message.setType(MessageType.DEFAULT);
+        message.setSender(userService.getUserById(2));
+        MessageRecipient messageRecipient = new MessageRecipient();
+        messageRecipient.setMessageStatus(MessageStatus.UNREADEN);
+        messageRecipient.setDeleted(false);
+        messageRecipient.setArchived(false);
+        messageRecipient.setRecipient(userService.getUserById(3));
+        message.setRecipients(Set.of(messageRecipient));
+        messageRepository.save(message);
+
+        Message message2 = new Message();
+        message2.setTitle("Tytul wiadomosci");
+        message2.setDescription("Opis wiadomosci");
+        message2.setDate(LocalDateTime.now());
+        message2.setType(MessageType.DEFAULT);
+        message2.setSender(userService.getUserById(2));
+        MessageRecipient messageRecipient2 = new MessageRecipient();
+        messageRecipient2.setMessageStatus(MessageStatus.READEN);
+        messageRecipient2.setDeleted(false);
+        messageRecipient2.setArchived(false);
+        messageRecipient2.setRecipient(userService.getUserById(3));
+        message2.setRecipients(Set.of(messageRecipient2));
+        messageRepository.save(message2);
+
+        Message message3 = new Message();
+        message3.setTitle("Tytul wiadomosci");
+        message3.setDescription("Opis wiadomosci");
+        message3.setDate(LocalDateTime.now());
+        message3.setType(MessageType.IMPORTANT);
+        message3.setSender(userService.getUserById(2));
+        MessageRecipient messageRecipient3 = new MessageRecipient();
+        messageRecipient3.setMessageStatus(MessageStatus.UNREADEN);
+        messageRecipient3.setDeleted(false);
+        messageRecipient3.setArchived(false);
+        messageRecipient3.setRecipient(userService.getUserById(3));
+        message3.setRecipients(Set.of(messageRecipient3));
+        messageRepository.save(message3);
+
+        Message message4 = new Message();
+        message4.setTitle("Tytul wiadomosci");
+        message4.setDescription("Opis wiadomosci");
+        message4.setDate(LocalDateTime.now());
+        message4.setType(MessageType.IMPORTANT);
+        message4.setSender(userService.getUserById(2));
+        MessageRecipient messageRecipient4 = new MessageRecipient();
+        messageRecipient4.setMessageStatus(MessageStatus.UNREADEN);
+        messageRecipient4.setDeleted(false);
+        messageRecipient4.setArchived(false);
+        messageRecipient4.setRecipient(userService.getUserById(3));
+        message4.setRecipients(Set.of(messageRecipient4));
+        messageRepository.save(message4);
+
+        Message message5 = new Message();
+        message5.setTitle("Tytul wiadomosci");
+        message5.setDescription("Opis wiadomosci");
+        message5.setDate(LocalDateTime.now());
+        message5.setType(MessageType.IMPORTANT);
+        message5.setSender(userService.getUserById(2));
+        MessageRecipient messageRecipient5 = new MessageRecipient();
+        messageRecipient5.setMessageStatus(MessageStatus.UNREADEN);
+        messageRecipient5.setDeleted(false);
+        messageRecipient5.setArchived(false);
+        messageRecipient5.setRecipient(userService.getUserById(3));
+        message5.setRecipients(Set.of(messageRecipient5));
+        messageRepository.save(message5);
+
+        Message message6 = new Message();
+        message6.setTitle("Tytul wiadomosci");
+        message6.setDescription("Opis wiadomosci");
+        message6.setDate(LocalDateTime.now());
+        message6.setType(MessageType.IMPORTANT);
+        message6.setSender(userService.getUserById(2));
+        MessageRecipient messageRecipient6 = new MessageRecipient();
+        messageRecipient6.setMessageStatus(MessageStatus.UNREADEN);
+        messageRecipient6.setDeleted(false);
+        messageRecipient6.setArchived(false);
+        messageRecipient6.setRecipient(userService.getUserById(3));
+        message6.setRecipients(Set.of(messageRecipient6));
+        messageRepository.save(message6);
+
+        Message message7 = new Message();
+        message7.setTitle("Tytul wiadomosci");
+        message7.setDescription("Opis wiadomosci");
+        message7.setDate(LocalDateTime.now());
+        message7.setType(MessageType.IMPORTANT);
+        message7.setSender(userService.getUserById(2));
+        MessageRecipient messageRecipient7 = new MessageRecipient();
+        messageRecipient7.setMessageStatus(MessageStatus.UNREADEN);
+        messageRecipient7.setDeleted(false);
+        messageRecipient7.setArchived(false);
+        messageRecipient7.setRecipient(userService.getUserById(3));
+        message7.setRecipients(Set.of(messageRecipient7));
+        messageRepository.save(message7);
     }
 
     private Page<Message> filterMessagesByFilter(Long userId, String messagesFilter, Pageable pageable) {
@@ -86,15 +184,19 @@ public class MessageService {
         messageRepository.save(message);
     }
 
-    public Message updateMessage(long messageId, String method) throws UserNotFoundException {
+    public Boolean updateMessage(long messageId, String method) throws UserNotFoundException {
         Long userId = userService.getLoggedInUser().getId();
         Message actualMessage =  messageRepository.findMessageByIdAndRecipientsRecipientId(messageId, userId);
+        boolean[] removeOneFromMessageCount = { false };
 
         switch (method) {
-            case "readen":
+            case "read":
                 actualMessage.getRecipients().forEach(r -> {
                     if (r.getRecipient().getId().equals(userId)) {
-                        r.setMessageStatus(MessageStatus.READEN);
+                        if (r.getMessageStatus().equals(MessageStatus.UNREADEN)) {
+                            r.setMessageStatus(MessageStatus.READEN);
+                            removeOneFromMessageCount[0] = true;
+                        }
                     }
                 });
                 break;
@@ -114,7 +216,8 @@ public class MessageService {
                 break;
         }
 
-        return messageRepository.save(actualMessage);
+        messageRepository.save(actualMessage);
+        return removeOneFromMessageCount[0];
     }
 
     public Page<MessageDto> getUserMessages(String messagesFilter, int page) throws UserNotFoundException {
@@ -159,26 +262,22 @@ public class MessageService {
         messageRepository.save(message);
     }
 
-    public MessageDto getMessageById(Long messageId) {
-        try {
-            Long userId = userService.getLoggedInUser().getId();
-            Message message =
-                    messageRepository.findMessageByIdAndRecipientsRecipientId(messageId, userId);
-            message.getRecipients().forEach(r -> {
-                if (r.getRecipient().getId().equals(userId) && r.getMessageStatus() != MessageStatus.SENT) {
-                    r.setMessageStatus(MessageStatus.READEN);
-                }
-            });
-            MessageDto messageDto = new MessageDto();
-            messageDto.setId(message.getId());
-            messageDto.setDescription(message.getDescription());
-            messageDto.setTitle(message.getTitle());
-            messageDto.setDate(message.getDate());
-            messageDto.setSender(message.getSender());
-            messageRepository.save(message);
-            return messageDto;
-        } catch (UserNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+    public MessageDto getMessageById(Long messageId) throws UserNotFoundException {
+        Long userId = userService.getLoggedInUser().getId();
+        Message message =
+                messageRepository.findMessageByIdAndRecipientsRecipientId(messageId, userId);
+        message.getRecipients().forEach(r -> {
+            if (r.getRecipient().getId().equals(userId) && r.getMessageStatus() != MessageStatus.SENT) {
+                r.setMessageStatus(MessageStatus.READEN);
+            }
+        });
+        MessageDto messageDto = new MessageDto();
+        messageDto.setId(message.getId());
+        messageDto.setDescription(message.getDescription());
+        messageDto.setTitle(message.getTitle());
+        messageDto.setDate(message.getDate());
+        messageDto.setSender(message.getSender());
+        messageRepository.save(message);
+        return messageDto;
     }
 }

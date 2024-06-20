@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,12 +37,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String jwtToken = TokenExtractor.extract(request);
-        String extractedUsername = null;
+        final String header = request.getHeader(HttpHeaders.AUTHORIZATION).split(" ")[1].trim();
+        final String jwtToken = header.equals("null") ? null : header;
 
         if(jwtToken != null) {
             try {
-                extractedUsername = jwtService.extractUsername(jwtToken);
+                final String extractedUsername = jwtService.extractUsername(jwtToken);
                 if (extractedUsername != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(extractedUsername);
                     if (jwtService.validateToken(jwtToken, userDetails)) {

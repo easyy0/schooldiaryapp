@@ -18,6 +18,13 @@ public class NewsService {
     public NewsService(NewsRepository newsRepository, UserService userService) {
         this.newsRepository = newsRepository;
         this.userService = userService;
+
+        News myNews = new News();
+        myNews.setHeader("PT");
+        myNews.setTitle("Przykladowy tytul");
+        myNews.setDescription("Description");
+        myNews.setUser(userService.getUserById(3));
+        saveUserNews(myNews);
     }
 
     public Set<News> getUserNews(Long userId) throws UserNotFoundException {

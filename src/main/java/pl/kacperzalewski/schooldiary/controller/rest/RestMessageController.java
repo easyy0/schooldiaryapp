@@ -1,13 +1,15 @@
 package pl.kacperzalewski.schooldiary.controller.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.kacperzalewski.schooldiary.dto.MessageDto;
+import org.springframework.web.servlet.view.RedirectView;
+import pl.kacperzalewski.schooldiary.dto.MessageFormDTO;
 import pl.kacperzalewski.schooldiary.exception.UserNotFoundException;
 import pl.kacperzalewski.schooldiary.service.MessageService;
+
+import java.util.List;
 
 @RestController
 public class RestMessageController {
@@ -20,22 +22,48 @@ public class RestMessageController {
     }
 
     @GetMapping("/api/messages")
-    public Page<MessageDto> getMessages(@RequestParam(required = false) String messagesFilter,
-                                        @RequestParam(required = false) Integer page) {
+    public ResponseEntity<?> getMessages(@RequestParam(required = false) String messagesFilter, Integer page) {
         try {
-            return messageService.getUserMessages(messagesFilter, page);
+            return ResponseEntity.ok(messageService.getUserMessages(messagesFilter, page));
         } catch (UserNotFoundException e) {
-            throw new RuntimeException(e);
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/api/messages-read")
+    public ResponseEntity<?> getMessageFromId(@RequestParam("messageId") long messageId) {
+        try {
+            return ResponseEntity.ok(List.of( messageService.updateMessage(messageId, "read"), messageService.getMessageById(messageId)));
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/api/messages-count")
+    public ResponseEntity<?> getNewMessagesCount() {
+        try {
+            return ResponseEntity.ok(messageService.getNewMessageCount());
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.notFound().build();
         }
     }
 
     @PatchMapping("/api/messages")
     public ResponseEntity<?> updateMessage(@RequestParam long messageId, @RequestParam String method) {
         try {
-            messageService.updateMessage(messageId, method);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(messageService.updateMessage(messageId, method));
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+    }
+
+    @PostMapping("/api/messages")
+    public ResponseEntity<?> addMessage(@RequestBody MessageFormDTO messageFormDTO) {
+        try {
+            messageService.saveMessageForm(messageFormDTO);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
     }
 }

@@ -73,17 +73,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**").permitAll()
                         .requestMatchers("/js/**").permitAll()
-                        .requestMatchers("/signin").permitAll()
-                        .requestMatchers("/api/signin").permitAll()
+                        .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .formLogin((formLogin) -> {
-                    formLogin.loginPage("/signin");
-                    formLogin.defaultSuccessUrl("/home");
-                })
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
