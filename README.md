@@ -4,16 +4,18 @@
 ## What's in
 - Login panel
 - Home:
-- - User news (New messages, new marks e.t.c)
+  - User news (New messages, new marks e.t.c)
 - Messages
-- - Writing messages (Multiple receivers)
-- - Messages categories (Important, readen, unreaden, sent, archived or deleted which is not sending to client)
+  - Writing messages (Multiple receivers)
+  - Messages categories (Important, readen, unreaden, sent, archived or deleted which is not sending to client)
 
 ## Work in progress
 > Im currently working on admin panel
 
 ## Future
 - Admin panel
+  - Managing user details (Resetting password, Changing data like class, roles., Deleting user)
+  - Class management (Creating new class, assigning users to the class, deleting class, changing class data)
 - Timetable
 - Marks
 - Frequence
