@@ -7,6 +7,7 @@
 
 ## Whats in
 - Login panel
+  - User authentcation based on JWT Token
 - Home:
   - User news (New messages, new marks e.t.c)
 - Messages
