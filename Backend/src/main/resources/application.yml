@@ -1,0 +1,16 @@
+server:
+  port: 8081
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/schooldiary
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: admin
