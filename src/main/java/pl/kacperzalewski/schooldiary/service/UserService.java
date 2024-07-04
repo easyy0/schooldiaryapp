@@ -16,6 +16,7 @@ import pl.kacperzalewski.schooldiary.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class UserService {
@@ -106,13 +107,27 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
-    public Set<UserDTO> getUsers() throws UserNotFoundException {
-        return userRepository.findByRolesNotContaining(getLoggedInUser().getId(), UserRole.TEACHER).stream().map(user -> {
-            UserDTO userDTO = new UserDTO();
-            userDTO.setId(user.getId());
-            userDTO.setFirstname(user.getFirstname());
-            userDTO.setLastname(user.getLastname());
-            return userDTO;
-        }).collect(Collectors.toSet());
+    public Set<UserDTO> getUsers(UserRole role) throws UserNotFoundException {
+        if (role == null) {
+            Iterable<User> allUsers = userRepository.findAll();
+
+            return StreamSupport.stream(allUsers.spliterator(), false).map(user -> {
+                UserDTO userDTO = new UserDTO();
+                userDTO.setId(user.getId());
+                userDTO.setFirstname(user.getFirstname());
+                userDTO.setLastname(user.getLastname());
+                userDTO.setRole(user.getRole());
+                return userDTO;
+            }).collect(Collectors.toSet());
+        } else {
+            return userRepository.findByRolesNotContaining(getLoggedInUser().getId(), role).stream().map(user -> {
+                UserDTO userDTO = new UserDTO();
+                userDTO.setId(user.getId());
+                userDTO.setFirstname(user.getFirstname());
+                userDTO.setLastname(user.getLastname());
+                userDTO.setRole(user.getRole());
+                return userDTO;
+            }).collect(Collectors.toSet());
+        }
     }
 }
