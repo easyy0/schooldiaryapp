@@ -10,7 +10,7 @@ spring:
       hibernate:
         format_sql: true
   datasource:
-    url: jdbc:mysql://localhost:3308/schooldiary
+    url: jdbc:mysql://localhost:3306/schooldiary
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: admin
