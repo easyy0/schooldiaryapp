@@ -36,7 +36,7 @@ function initPage() {
             logoutController()
             break
         default:
-            window.location.href = "../pages/home.html"
+            window.location.href = "../Frontend/pages/home.html"
             break
     }
 }
