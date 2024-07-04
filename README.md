@@ -1,7 +1,11 @@
 # School Diary App
-> School diary electronic
 
-## What's in
+## Table of Contents
+* [What's in](#whats-in)
+* [Currently working on](#work-in-progress)
+* [Incoming features](#incoming-features)
+
+## Whats in
 - Login panel
 - Home:
   - User news (New messages, new marks e.t.c)
@@ -12,7 +16,7 @@
 ## Work in progress
 > Im currently working on admin panel
 
-## Future
+## Incoming Features
 - Admin panel
   - Managing user details (Resetting password, Changing data like class, roles., Deleting user)
   - Class management (Creating new class, assigning users to the class, deleting class, changing class data)
