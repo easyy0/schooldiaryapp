@@ -1,5 +1,6 @@
 package pl.kacperzalewski.schooldiary.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +12,7 @@ import pl.kacperzalewski.schooldiary.entity.enums.MessageStatus;
 import pl.kacperzalewski.schooldiary.entity.enums.MessageType;
 import pl.kacperzalewski.schooldiary.entity.enums.UserRole;
 import pl.kacperzalewski.schooldiary.exception.UserNotFoundException;
+import pl.kacperzalewski.schooldiary.repository.SchoolClassRepository;
 import pl.kacperzalewski.schooldiary.repository.UserRepository;
 
 import java.time.LocalDateTime;
@@ -23,9 +25,20 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final SchoolClassRepository schoolClassRepository;
+
+    @Transactional
+    public void Save() {
+
+    }
+
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, SchoolClassRepository schoolClassRepository) {
         this.userRepository = userRepository;
+        this.schoolClassRepository = schoolClassRepository;
+
+        SchoolClass schoolClass = new SchoolClass();
+        schoolClass.setName("1A");
 
         User admin = new User();
         admin.setUsername("admin");
@@ -35,6 +48,9 @@ public class UserService {
         admin.setRole(UserRole.ADMIN);
         userRepository.save(admin);
         System.out.println("USER SAVED!");
+
+        schoolClass.setStudents(Set.of(admin));
+        schoolClassRepository.save(schoolClass);
 
         User admin2 = new User();
         admin2.setUsername("admin2");

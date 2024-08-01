@@ -6,9 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CookieClearer {
 
     public static void clearCookie(HttpServletResponse response) {
-        Cookie deletedCookie = new Cookie("jwtToken", null);
-        deletedCookie.setMaxAge(0);
-        deletedCookie.setPath("/");
-        response.addCookie(deletedCookie);
+        String cookieHeader = String.format("refreshToken=%s; Path=%s; HttpOnly; Max-Age=%d; Domain=%s; SameSite=None; Secure", null, "/", 0, "localhost");
+        response.addHeader("Set-Cookie", cookieHeader);
     }
 }

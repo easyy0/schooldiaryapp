@@ -1,4 +1,4 @@
-package pl.kacperzalewski.schooldiary.repository;
+package pl.kacperzalewski.schooldiary.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,8 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import pl.kacperzalewski.schooldiary.entity.CustomUserDetails;
 import pl.kacperzalewski.schooldiary.entity.User;
-
-import java.util.Optional;
+import pl.kacperzalewski.schooldiary.repository.UserRepository;
 
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService {

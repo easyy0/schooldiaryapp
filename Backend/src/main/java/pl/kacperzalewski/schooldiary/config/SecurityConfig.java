@@ -22,7 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pl.kacperzalewski.schooldiary.filter.JwtAuthFilter;
-import pl.kacperzalewski.schooldiary.repository.UserDetailsServiceImpl;
+import pl.kacperzalewski.schooldiary.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity

@@ -52,14 +52,14 @@ public class JwtService {
 
 
 
-    public String GenerateToken(String username){
+    public String GenerateToken(String username, Boolean isRefreshToken){
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
+        return createToken(claims, username, isRefreshToken);
     }
 
 
 
-    private String createToken(Map<String, Object> claims, String username) {
+    private String createToken(Map<String, Object> claims, String username, Boolean isRefreshToken) {
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -72,5 +72,9 @@ public class JwtService {
     private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public String refreshAccessToken(String username, String refreshToken) {
+        return GenerateToken(username, false);
     }
 }
