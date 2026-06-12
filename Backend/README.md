@@ -8,20 +8,14 @@ CREATE DATABASE schooldiary;
 
 2. Go to the backend directory:
 
-```bash
+```cmd
 cd Backend
 ```
 
 3. Create your local environment file from the example:
 
-```bash
-cp .env.example .env
-```
-
-On Windows PowerShell:
-
-```powershell
-Copy-Item .env.example .env
+```cmd
+copy .env.example .env
 ```
 
 4. Update the database credentials and JWT secret in `.env` if needed:

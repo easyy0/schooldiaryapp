@@ -2,31 +2,25 @@
 
 1. Go to the frontend directory:
 
-```bash
+```cmd
 cd Frontend
 ```
 
 2. Create your local environment file from the example:
 
-```bash
-cp .env.example .env
-```
-
-On Windows PowerShell:
-
-```powershell
-Copy-Item .env.example .env
+```cmd
+copy .env.example .env
 ```
 
 3. Install dependencies:
 
-```bash
+```cmd
 npm install
 ```
 
 4. Run the frontend:
 
-```bash
+```cmd
 npm run dev
 ```
 
