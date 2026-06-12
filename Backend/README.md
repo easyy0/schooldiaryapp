@@ -33,16 +33,10 @@ DB_PASSWORD=
 JWT_SECRET=your-base64-secret
 ```
 
-5. Run the backend:
+5. Run the backend on Windows cmd:
 
-```bash
-./mvnw spring-boot:run
-```
-
-On Windows PowerShell:
-
-```powershell
-.\mvnw.cmd spring-boot:run
+```cmd
+mvnw.cmd spring-boot:run
 ```
 
 The backend runs by default at:
