@@ -1,0 +1,11 @@
+{
+    "HEADER": "Zaloguj się do Dziennika Elektronicznego",
+    "NO_ACCOUNT": "Nie posiadasz konta?",
+    "GET_ACCOUNT": "Stwórz konto",
+    "INFORMATION": "Informacja",
+    "GET_ACCOUNT_INFORMATION": "Skontaktuj się z nauczycielem lub administratorem aby uzyskać dostęp",
+    "RESET_PASSWORD": "Skontaktuj się z nauczycielem lub administratorem aby zresetować hasło!",
+    "FORGOT_PASSWORD": "Nie pamiętam hasła",
+    "INVALID_CREDENTIALS": "Nieprawidłowy login lub hasło",
+    "LOGIN": "Zaloguj"
+}

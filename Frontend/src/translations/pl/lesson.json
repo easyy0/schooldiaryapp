@@ -1,0 +1,22 @@
+{
+    "LESSON": "Lekcja",
+    "MATH": "Matematyka",
+    "PHYSICS": "Fizyka",
+    "CHEMISTRY": "Chemia",
+    "BIOLOGY": "Biologia",
+    "IT": "Informatyka",
+    "POLISH": "Język polski",
+    "HISTORY": "Historia",
+    "CIVICS": "Wiedza o społeczeństwie",
+    "PHILOSOPHY": "Filozofia",
+    "GERMAN": "Język niemiecki",
+    "FRENCH": "Język francuski",
+    "SPANISH": "Język hiszpański",
+    "MUSIC": "Muzyka",
+    "ART": "Plastyka",
+    "PE": "Wychowanie fizyczne",
+    "TECHNOLOGY": "Technika",
+    "SAFETY_EDUCATION": "Edukacja dla bezpieczeństwa",
+    "NATURE": "Przyroda",
+    "ENGLISH": "Język angielski"
+}

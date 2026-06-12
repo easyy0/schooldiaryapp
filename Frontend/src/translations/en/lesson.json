@@ -1,0 +1,22 @@
+{
+    "LESSON": "Lesson",
+    "MATH": "Mathematics",
+    "PHYSICS": "Physics",
+    "CHEMISTRY": "Chemistry",
+    "BIOLOGY": "Biology",
+    "IT": "Computer Science",
+    "POLISH": "Polish Language",
+    "HISTORY": "History",
+    "CIVICS": "Civics",
+    "PHILOSOPHY": "Philosophy",
+    "GERMAN": "German Language",
+    "FRENCH": "French Language",
+    "SPANISH": "Spanish Language",
+    "MUSIC": "Music",
+    "ART": "Art",
+    "PE": "Physical Education",
+    "TECHNOLOGY": "Technology",
+    "SAFETY_EDUCATION": "Safety Education",
+    "NATURE": "Nature",
+    "ENGLISH": "English Language"
+}

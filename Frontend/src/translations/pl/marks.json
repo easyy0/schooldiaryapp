@@ -1,0 +1,14 @@
+{
+    "MARK_DETAILS": "Szczegóły oceny",
+    "MARKS": "Oceny",
+    "MARK": "Ocena",
+    "WEIGHT": "Waga",
+    "LOADING_MARKS": "Wczytywanie ocen...",
+    "ADD_MARK": "Dodaj ocenę",
+    "SEMESTRAL_AVERAGE": "Średnia semestralna",
+    "YEARLY_AVERAGE": "Średnia roczna",
+    "MARKS_PREVIEW": "Podgląd ocen",
+    "SELECT_CLASS_AND_STUDENT": "Wybierz klasę i ucznia",
+    "CHOOSE_STUDENT_FROM_LIST": "Wybierz ucznia z listy",
+    "STUDENT_HAS_NO_MARKS": "Ten uczeń nie ma jeszcze ocen"
+}

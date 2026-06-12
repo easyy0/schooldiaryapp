@@ -1,0 +1,14 @@
+{
+    "MARK_DETAILS": "Mark details",
+    "MARKS": "Marks",
+    "MARK": "Mark",
+    "WEIGHT": "Weight",
+    "LOADING_MARKS": "Loading marks...",
+    "ADD_MARK": "Add mark",
+    "SEMESTRAL_AVERAGE": "Semestral average",
+    "YEARLY_AVERAGE": "Yearly average",
+    "MARKS_PREVIEW": "Marks preview",
+    "SELECT_CLASS_AND_STUDENT": "Select class and student",
+    "CHOOSE_STUDENT_FROM_LIST": "Choose student from the list",
+    "STUDENT_HAS_NO_MARKS": "This student has no marks yet"
+}

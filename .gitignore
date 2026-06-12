@@ -1,0 +1,30 @@
+Backend/target/
+Backend/*.class
+
+Frontend/node_modules/
+Frontend/dist/
+Frontend/build/
+Frontend/.vite/
+
+# Env / secrets
+.env
+*.env
+!.env.example
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+tmp/
+temp/
+*.tmp

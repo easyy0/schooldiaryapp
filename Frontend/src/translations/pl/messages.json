@@ -1,0 +1,24 @@
+{
+    "MESSAGES": "Wiadomości",
+    "MESSAGE_CONTENT": "Treść wiadomości",
+    "MESSAGE_CONTENT_PLACEHOLDER": "Wpisz treść...",
+    "NEW_MESSAGE": "Nowa Wiadomość",
+    "SELECTED": "Zaznaczonych",
+    "MARK_AS_READ": "Oznacz jako przeczytane",
+    "ARCHIVE": "Zarchiwizuj",
+    "UNARCHIVE": "Przywróć",
+    "DELETE": "Usuń",
+
+    "FILTER_ALL": "Wszystkie",
+    "FILTER_IMPORTANT": "Pilne",
+    "FILTER_UNREAD": "Nieprzeczytane",
+    "FILTER_READ": "Przeczytane",
+    "FILTER_SENT": "Wysłane",
+    "FILTER_ARCHIVED": "Zarchiwizowane",
+    "LOADING_MESSAGES": "Wczytywanie wiadomości...",
+    "NO_MESSAGES_FOUND": "Nie znaleziono żadnych wiadomości...",
+    "WRITE_A_MESSAGE": "Napisz wiadomość",
+    "RECIPIENTS": "Odbiorcy",
+    "IMPORTANT": "Pilne",
+    "SENDER": "Nadawca"
+}

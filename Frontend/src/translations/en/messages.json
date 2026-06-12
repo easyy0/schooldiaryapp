@@ -1,0 +1,24 @@
+{
+    "MESSAGES": "Messages",
+    "MESSAGE_CONTENT": "Message content",
+    "MESSAGE_CONTENT_PLACEHOLDER": "Write content here...",
+    "NEW_MESSAGE": "New Message",
+    "SELECTED": "Selected",
+    "MARK_AS_READ": "Mark As Read",
+    "ARCHIVE": "Archive",
+    "UNARCHIVE": "Unarchive",
+    "DELETE": "Delete",
+
+    "FILTER_ALL": "All",
+    "FILTER_IMPORTANT": "Important",
+    "FILTER_UNREAD": "Unread",
+    "FILTER_READ": "Read",
+    "FILTER_SENT": "Sent",
+    "FILTER_ARCHIVED": "Archived",
+    "LOADING_MESSAGES": "Loading messages...",
+    "NO_MESSAGES_FOUND": "No messages found...",
+    "WRITE_A_MESSAGE": "Write a message",
+    "RECIPIENTS": "Recipients",
+    "IMPORTANT": "Important",
+    "SENDER": "Sender"
+}

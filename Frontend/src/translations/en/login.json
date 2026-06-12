@@ -1,0 +1,11 @@
+{
+    "HEADER": "Login to School Diary",
+    "NO_ACCOUNT": "Don't have account?",
+    "GET_ACCOUNT": "Get Account",
+    "INFORMATION": "Information",
+    "GET_ACCOUNT_INFORMATION": "Please contact with your teacher or administrator to get access",
+    "RESET_PASSWORD": "Please contact with your teacher or administrator to reset your password!",
+    "FORGOT_PASSWORD": "Forgot password",
+    "INVALID_CREDENTIALS": "Invalid username or password",
+    "LOGIN": "Login"
+}

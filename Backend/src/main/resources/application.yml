@@ -1,0 +1,29 @@
+app:
+  cors:
+    allowed-origin: ${CORS_ALLOWED_ORIGIN:http://localhost:5173}
+  cookie:
+    domain: ${COOKIE_DOMAIN:localhost}
+  seed:
+    enabled: true
+server:
+  port: ${SERVER_PORT:8081}
+spring:
+  config:
+    import: file:.env[.properties]
+  jpa:
+    database-platform: ${DB_DIALECT:org.hibernate.dialect.MySQLDialect}
+    hibernate:
+      ddl-auto: ${HIBERNATE_DDL_AUTO:update}
+    show-sql: ${HIBERNATE_SHOW_SQL:false}
+    properties:
+      hibernate:
+        format_sql: ${HIBERNATE_FORMAT_SQL:true}
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/schooldiary}
+    driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+jwt:
+  accessTokenExpirationMinutes: ${JWT_ACCESS_TOKEN_EXPIRATION_MINUTES:15}
+  refreshTokenExpiration: ${JWT_REFRESH_TOKEN_EXPIRATION_DAYS:30}
+  secret: ${JWT_SECRET}
