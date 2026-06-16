@@ -69,5 +69,5 @@ You can use the following demo accounts to test the application:
 |---|---|---|
 | Admin | admin | admin |
 | Teacher | teacher | teacher  |
-| Student | student1a | student123 |
-| Student | student1b | parent123 |
+| Student | student1a | student1a |
+| Student | student1b | student1b |
