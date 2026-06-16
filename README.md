@@ -60,3 +60,14 @@ Before running the project locally, make sure you have installed:
 
 - [Frontend](/Frontend/README.md)
 - [Backend](/Backend/README.md)
+
+## Demo accounts
+
+You can use the following demo accounts to test the application:
+
+| Role | Username | Password |
+|---|---|---|
+| Admin | admin | admin |
+| Teacher | teacher | teacher  |
+| Student | student1a | student123 |
+| Student | student1b | parent123 |
